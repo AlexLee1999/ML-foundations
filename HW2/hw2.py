@@ -58,12 +58,10 @@ def calculate_ein(s, theta, lst):
 
 def calculate_eout(s, theta, prob):
     if s == -1:
-        return 1 - (abs(theta) / 2)
+        e_no = 1 - (abs(theta) / 2)
     else:
-        return abs(theta) / 2
-
-        
-
+        e_no = abs(theta) / 2
+    return (1 - 2 * prob) * e_no + prob
 
 def gen_theta_lst(lst):
     re_lst = []
@@ -73,7 +71,6 @@ def gen_theta_lst(lst):
             tem = (lst[i].get_x() + lst[i + 1].get_x()) / 2
             re_lst.append(tem)
     return re_lst
-
 
 def decision_stump(lst):
     lst.sort()
@@ -141,4 +138,4 @@ if __name__ == "__main__":
         n = eout - ein 
         sum_20 += n
     print(f"problem 20: {sum_20/10000}")
-
+    
