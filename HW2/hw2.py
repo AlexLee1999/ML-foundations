@@ -107,7 +107,7 @@ if __name__ == "__main__":
     for _ in range(10000):
         lst = gen_data(20, 0)
         ein, theta, s = decision_stump(lst)
-        eout = calculate_eout(s, theta, 0.1)
+        eout = calculate_eout(s, theta, 0)
         n = eout - ein 
         sum_17 += n
     print(f"problem 17: {sum_17/10000}")
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     for _ in range(10000):
         lst = gen_data(2, 0.1)
         ein, theta, s = decision_stump(lst)
-        eout = calculate_eout(s, theta, 0)
+        eout = calculate_eout(s, theta, 0.1)
         n = eout - ein 
         sum_18 += n
     print(f"problem 18: {sum_18/10000}")
