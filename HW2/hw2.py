@@ -1,6 +1,8 @@
 import random
 
 INF = 1000000000
+
+
 class Data:
     def __init__(self, x, y):
         self._x = x
@@ -8,9 +10,9 @@ class Data:
 
     def __str__(self):
         return(f"x: {self._x}, y: {self._y}")
-    
+
     def __lt__(self, other):
-         return self._x < other._x
+        return self._x < other._x
 
     def get_x(self):
         return self._x
@@ -18,12 +20,15 @@ class Data:
     def get_y(self):
         return self._y
 
+
 def print_data_list(lst):
     for element in lst:
         print(element)
 
+
 def gen_x():
-    return random.uniform(-1,1)
+    return random.uniform(-1, 1)
+
 
 def gen_one_data(prob):
     x = gen_x()
@@ -33,6 +38,7 @@ def gen_one_data(prob):
         y *= (-1)
     return x, y
 
+
 def gen_data(size, prob):
     data_lst = []
     for _ in range(size):
@@ -41,11 +47,13 @@ def gen_data(size, prob):
         data_lst.append(new_data)
     return data_lst
 
+
 def sign(x):
     if x > 0:
         return 1
     else:
         return -1
+
 
 def calculate_ein(s, theta, lst):
     count = 0
@@ -56,12 +64,14 @@ def calculate_ein(s, theta, lst):
             count += 1
     return count / len(lst)
 
+
 def calculate_eout(s, theta, prob):
     if s == -1:
         e_no = 1 - (abs(theta) / 2)
     else:
         e_no = abs(theta) / 2
     return (1 - 2 * prob) * e_no + prob
+
 
 def gen_theta_lst(lst):
     re_lst = []
@@ -71,6 +81,7 @@ def gen_theta_lst(lst):
             tem = (lst[i].get_x() + lst[i + 1].get_x()) / 2
             re_lst.append(tem)
     return re_lst
+
 
 def decision_stump(lst):
     lst.sort()
@@ -92,14 +103,14 @@ def decision_stump(lst):
                 s = -1
                 t = theta
     return min_num, t, s
-        
+
 if __name__ == "__main__":
     sum_16 = 0
     for _ in range(10000):
         lst = gen_data(2, 0)
         ein, theta, s = decision_stump(lst)
         eout = calculate_eout(s, theta, 0)
-        n = eout - ein 
+        n = eout - ein
         sum_16 += n
     print(f"problem 16: {sum_16/10000}")
 
@@ -108,7 +119,7 @@ if __name__ == "__main__":
         lst = gen_data(20, 0)
         ein, theta, s = decision_stump(lst)
         eout = calculate_eout(s, theta, 0)
-        n = eout - ein 
+        n = eout - ein
         sum_17 += n
     print(f"problem 17: {sum_17/10000}")
 
@@ -117,7 +128,7 @@ if __name__ == "__main__":
         lst = gen_data(2, 0.1)
         ein, theta, s = decision_stump(lst)
         eout = calculate_eout(s, theta, 0.1)
-        n = eout - ein 
+        n = eout - ein
         sum_18 += n
     print(f"problem 18: {sum_18/10000}")
 
@@ -126,7 +137,7 @@ if __name__ == "__main__":
         lst = gen_data(20, 0.1)
         ein, theta, s = decision_stump(lst)
         eout = calculate_eout(s, theta, 0.1)
-        n = eout - ein 
+        n = eout - ein
         sum_19 += n
     print(f"problem 19: {sum_19/10000}")
 
@@ -135,7 +146,7 @@ if __name__ == "__main__":
         lst = gen_data(200, 0.1)
         ein, theta, s = decision_stump(lst)
         eout = calculate_eout(s, theta, 0.1)
-        n = eout - ein 
+        n = eout - ein
         sum_20 += n
     print(f"problem 20: {sum_20/10000}")
-    
+
