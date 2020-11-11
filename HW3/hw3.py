@@ -3,7 +3,7 @@ import numpy as np
 import random
 import sys
 import math
-times = 1000
+times = 1
 
 
 data = []
@@ -149,23 +149,34 @@ out_err = binary_err(np.dot(data_test, w_lin), data_y_test) / 3000
 print(f"Problem 18 : {abs(in_err - out_err)}")
 
 
-def transform_data(d, n):
-    r_d = np.zeros((1000,11))
-    for i in range(1000):
-        for j in range(11):
-            x= d[i, j]
-            r_d[i, j] = math.pow(x, n)
+def transform_data(d, n, size):
+    r_d = np.zeros((size,10))
+    for i in range(size):
+        for j in range(1,11):
+            r_d[i, j-1] = math.pow(d[i, j], n)
     return r_d
 
-data_3 = transform_data(data, 3)
+def merge_transform_data(d, n, size):
+    re_d = d
+    for i in range(2,n+1):
+        r_data = transform_data(d, i, size)
+        re_d = np.concatenate((re_d, r_data), axis =1)
+    return re_d
+data_3 = merge_transform_data(data, 3, 1000)
+
+data_test_3 = merge_transform_data(data_test, 3, 3000)
 data_inv_3 = inv(data_3)
 w_lin_3 = np.dot(data_inv_3, data_y)
+print(w_lin_3)
 in_err_3 = binary_err(np.dot(data_3, w_lin_3), data_y) / 1000
-out_err_3 = binary_err(np.dot(data_test, w_lin_3), data_y_test) / 3000
+out_err_3 = binary_err(np.dot(data_test_3, w_lin_3), data_y_test) / 3000
 print(f"Problem 19 : {abs(in_err_3 - out_err_3)}")
-data_10 = transform_data(data, 10)
+
+data_10 = merge_transform_data(data, 10, 1000)
+data_test_10 = merge_transform_data(data_test, 10, 3000)
+
 data_inv_10 = inv(data_10)
 w_lin_10 = np.dot(data_inv_10, data_y)
 in_err_10 = binary_err(np.dot(data_10, w_lin_10), data_y) / 1000
-out_err_10 = binary_err(np.dot(data_test, w_lin_10), data_y_test) / 3000
+out_err_10 = binary_err(np.dot(data_test_10, w_lin_10), data_y_test) / 3000
 print(f"Problem 20 : {abs(in_err_10 - out_err_10)}")
