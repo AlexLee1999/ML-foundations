@@ -11,10 +11,10 @@ with open('hw3_train.dat', 'r') as f:
     d = f.readlines()
     for i in d:
         k = i.rstrip().split("\t")
-        data.append([i for i in k]) 
+        data.append([i for i in k])
 
 data = np.array(data, dtype=float)
-data = np.insert(data,0,1.0,axis=1)
+data = np.insert(data, 0, 1.0, axis=1)
 data_y = data[:, -1]
 data = np.delete(data, -1, axis=1)
 
@@ -27,7 +27,6 @@ data_inv = inv(data)
 w_lin = np.dot(data_inv, data_y)
 
 
-
 def cal_err(d, w, y):
     y_hat = np.dot(d, w)
     err = np.subtract(y, y_hat)
@@ -37,7 +36,6 @@ def cal_err(d, w, y):
 
 e_wlin = cal_err(data, w_lin, data_y)
 print(f"Problem 14 : {e_wlin / 1000}")
-
 
 
 def linear_sgd():
@@ -52,7 +50,7 @@ def linear_sgd():
         y_n = data_y[x]
         dot = np.dot(np.transpose(w), np.transpose(x_n))
         w = w + 0.002 * (y_n - dot[0]) * np.transpose([x_n])
-        a = cal_err(data, np.transpose(w[:,0]), data_y)
+        a = cal_err(data, np.transpose(w[:, 0]), data_y)
         count += 1
     return count
 c_15 = 0
@@ -72,7 +70,7 @@ def err_log(x, w, y):
 
 def log_sgd():
     w = np.zeros(shape=(11, 1))
-    
+
     seedValue = random.randrange(sys.maxsize)
     random.seed(seedValue)
     for _ in range(500):
@@ -86,7 +84,7 @@ def log_sgd():
     for i in range(1000):
         x_i = data[i]
         y_i = data_y[i]
-        su += err_log(x_i, np.transpose(w[:,0]), y_i)
+        su += err_log(x_i, np.transpose(w[:, 0]), y_i)
     return su / 1000
 
 c_16 = 0
@@ -111,7 +109,7 @@ def log_sgd_with_init():
     for i in range(1000):
         x_i = data[i]
         y_i = data_y[i]
-        su += err_log(x_i, np.transpose(w[:,0]), y_i)
+        su += err_log(x_i, np.transpose(w[:, 0]), y_i)
     return su / 1000
 
 c_17 = 0
@@ -124,12 +122,13 @@ with open('hw3_test.dat', 'r') as f:
     d = f.readlines()
     for i in d:
         k = i.rstrip().split("\t")
-        data_test.append([i for i in k]) 
+        data_test.append([i for i in k])
 
 data_test = np.array(data_test, dtype=float)
-data_test = np.insert(data_test,0,1.0,axis=1)
+data_test = np.insert(data_test, 0, 1.0, axis=1)
 data_y_test = data_test[:, -1]
 data_test = np.delete(data_test, -1, axis=1)
+
 
 def sign(x):
     if x > 0:
@@ -150,24 +149,24 @@ print(f"Problem 18 : {abs(in_err - out_err)}")
 
 
 def transform_data(d, n, size):
-    r_d = np.zeros((size,10))
+    r_d = np.zeros((size, 10))
     for i in range(size):
-        for j in range(1,11):
+        for j in range(1, 11):
             r_d[i, j-1] = math.pow(d[i, j], n)
     return r_d
 
+
 def merge_transform_data(d, n, size):
     re_d = d
-    for i in range(2,n+1):
+    for i in range(2, n+1):
         r_data = transform_data(d, i, size)
-        re_d = np.concatenate((re_d, r_data), axis =1)
+        re_d = np.concatenate((re_d, r_data), axis=1)
     return re_d
 data_3 = merge_transform_data(data, 3, 1000)
 
 data_test_3 = merge_transform_data(data_test, 3, 3000)
 data_inv_3 = inv(data_3)
 w_lin_3 = np.dot(data_inv_3, data_y)
-print(w_lin_3)
 in_err_3 = binary_err(np.dot(data_3, w_lin_3), data_y) / 1000
 out_err_3 = binary_err(np.dot(data_test_3, w_lin_3), data_y_test) / 3000
 print(f"Problem 19 : {abs(in_err_3 - out_err_3)}")
@@ -180,3 +179,4 @@ w_lin_10 = np.dot(data_inv_10, data_y)
 in_err_10 = binary_err(np.dot(data_10, w_lin_10), data_y) / 1000
 out_err_10 = binary_err(np.dot(data_test_10, w_lin_10), data_y_test) / 3000
 print(f"Problem 20 : {abs(in_err_10 - out_err_10)}")
+
