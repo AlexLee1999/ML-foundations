@@ -27,9 +27,9 @@ def linear_sgd():
     zero_data = np.zeros(shape=(11, 1))
     w = pd.DataFrame(zero_data)
     count = 0
+    seedValue = random.randrange(sys.maxsize)
+    random.seed(seedValue)
     while a > 1.01 * e_wlin:
-        seedValue = random.randrange(sys.maxsize)
-        random.seed(seedValue)
         x = random.randint(0,999)
         x_n = df.loc[[x]]
         y_n = df_y.loc[x]
@@ -39,10 +39,11 @@ def linear_sgd():
         a = cal_err(w[0])
         count += 1
     return count
-c = 0
+c_15 = 0
 for _ in range(1000):
-    c+=linear_sgd()
-print(f"Problem 15 : {c / 1000}")
+    c_15 += linear_sgd()
+
+print(f"Problem 15 : {c_15 / 1000}")
 
 def sig(x):
     return 1/(1+math.exp(-1*x))
@@ -54,9 +55,9 @@ def err_log(w, x, y):
 def log_sgd():
     zero_data = np.zeros(shape=(11, 1))
     w = pd.DataFrame(zero_data)
+    seedValue = random.randrange(sys.maxsize)
+    random.seed(seedValue)
     for _ in range(500):
-        seedValue = random.randrange(sys.maxsize)
-        random.seed(seedValue)
         x = random.randint(0,999)
         x_n = df.loc[[x]]
         y_n = df_y.loc[x]
@@ -71,13 +72,17 @@ def log_sgd():
         su += err_log(w.transpose(), x_i.transpose(), y_i)
     return su /1000
 
-print(f"Problem 16 : {log_sgd()}")
+c_16 = 0
+for _ in range(1000):
+    c_16+=log_sgd()
+
+print(f"Problem 16 : {c_16 / 1000}")
 
 def log_sgd_with_init():
     w = pd.DataFrame(w_lin)
+    seedValue = random.randrange(sys.maxsize)
+    random.seed(seedValue)
     for _ in range(500):
-        seedValue = random.randrange(sys.maxsize)
-        random.seed(seedValue)
         x = random.randint(0,999)
         x_n = df.loc[[x]]
         y_n = df_y.loc[x]
@@ -92,4 +97,18 @@ def log_sgd_with_init():
         su += err_log(w.transpose(), x_i.transpose(), y_i)
     return su /1000
 
-print(f"Problem 17 : {log_sgd_with_init()}")
+c_17 = 0
+for _ in range(1000):
+    c_17 += log_sgd_with_init()
+
+print(f"Problem 17 : {c_17 / 1000}")
+
+df_test = pd.read_csv('hw3_test.dat', sep="\t", header=None)
+print(w_lin)
+def sign(x):
+    if x > 0:
+        return 1
+    else:
+        return -1
+
+
