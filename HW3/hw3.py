@@ -3,7 +3,7 @@ import numpy as np
 import random
 import sys
 import math
-times = 1
+times = 1000
 
 
 data = []
