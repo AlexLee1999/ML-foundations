@@ -130,7 +130,6 @@ data_test = np.array(data_test, dtype=float)
 data_test = np.insert(data_test,0,1.0,axis=1)
 data_y_test = data_test[:, -1]
 data_test = np.delete(data_test, -1, axis=1)
-print(data_test[0])
 
 def sign(x):
     if x > 0:
@@ -151,18 +150,22 @@ print(f"Problem 18 : {abs(in_err - out_err)}")
 
 
 def transform_data(d, n):
-    for i in d:
-        for j in i:
-            print(j)
-            j**=n
-    return d
+    r_d = np.zeros((1000,11))
+    for i in range(1000):
+        for j in range(11):
+            x= d[i, j]
+            r_d[i, j] = math.pow(x, n)
+    return r_d
 
-transform_data(data, 3)
-print(data)
-'''
-print(f"Problem 19 : {abs(cal_err(df_3, w_lin_3, df_y)/1000 - cal_err(df_test, w_lin_3, df_y_test)/3000)}")
-transform_data(df_10, 10)
-df_inv_10 = pd.DataFrame(np.linalg.pinv(df_10.values), df_10.columns, df_10.index)
-w_lin_10 = df_inv_10 @ df_y
-print(f"Problem 20 : {abs(cal_err(df_10, w_lin_10, df_y)/1000 - cal_err(df_test, w_lin_10, df_y_test)/3000)}")
-'''
+data_3 = transform_data(data, 3)
+data_inv_3 = inv(data_3)
+w_lin_3 = np.dot(data_inv_3, data_y)
+in_err_3 = binary_err(np.dot(data_3, w_lin_3), data_y) / 1000
+out_err_3 = binary_err(np.dot(data_test, w_lin_3), data_y_test) / 3000
+print(f"Problem 19 : {abs(in_err_3 - out_err_3)}")
+data_10 = transform_data(data, 10)
+data_inv_10 = inv(data_10)
+w_lin_10 = np.dot(data_inv_10, data_y)
+in_err_10 = binary_err(np.dot(data_10, w_lin_10), data_y) / 1000
+out_err_10 = binary_err(np.dot(data_test, w_lin_10), data_y_test) / 3000
+print(f"Problem 20 : {abs(in_err_10 - out_err_10)}")
