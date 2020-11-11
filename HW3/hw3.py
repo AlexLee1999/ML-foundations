@@ -39,12 +39,10 @@ def linear_sgd():
         a = cal_err(w[0])
         count += 1
     return count
-    '''
 c = 0
-for _ in range(10):
+for _ in range(1000):
     c+=linear_sgd()
-print(f"Problem 15 : {c / 10}")
-'''
+print(f"Problem 15 : {c / 1000}")
 
 def sig(x):
     return 1/(1+math.exp(-1*x))
@@ -73,7 +71,7 @@ def log_sgd():
         su += err_log(w.transpose(), x_i.transpose(), y_i)
     return su /1000
 
-print(log_sgd())
+print(f"Problem 16 : {log_sgd()}")
 
 def log_sgd_with_init():
     w = pd.DataFrame(w_lin)
@@ -94,4 +92,4 @@ def log_sgd_with_init():
         su += err_log(w.transpose(), x_i.transpose(), y_i)
     return su /1000
 
-print(log_sgd_with_init())
+print(f"Problem 17 : {log_sgd_with_init()}")
